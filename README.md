@@ -8,7 +8,13 @@ Diese Anleitung beschreibt die lokale Entwicklung von n8n hinter Caddy mit HTTPS
 
 ## 1) Projekt vorbereiten
 ```bash
-cd /Users/chris/Sites/aam_lehrgang/n8n-https-local
+# optional: Zielordner anlegen und in "Sites" wechseln
+mkdir -p /Users/Dein-Benutzername/Sites
+cd /Users/Dein-Benutzername/Sites
+
+# Repository klonen
+git clone https://github.com/Dakaric/n8n-localhost-with-https.git
+cd n8n-localhost-with-https
 ```
 
 ## 2) Hosts-Eintrag
