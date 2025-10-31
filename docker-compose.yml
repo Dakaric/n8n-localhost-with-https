@@ -3,9 +3,9 @@ services:
     image: n8nio/n8n:latest
     environment:
       - N8N_PORT=5678
-      - N8N_PROTOCOL=http
-      - N8N_HOST=${N8N_HOST:-n8n.localhost}
-      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://n8n.localhost}
+      - N8N_PROTOCOL=https
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://localhost}
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
@@ -46,6 +46,7 @@ services:
       - internal
     ports:
       - "127.0.0.1:443:443"
+      - "127.0.0.1:5678:5678"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./certs:/etc/certs:ro

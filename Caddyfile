@@ -3,4 +3,19 @@ n8n.localhost {
   reverse_proxy n8n:5678
 }
 
+n8n.localhost:5678 {
+  tls /etc/certs/n8n.localhost.pem /etc/certs/n8n.localhost-key.pem
+  reverse_proxy n8n:5678
+}
+
+localhost {
+  tls /etc/certs/localhost.pem /etc/certs/localhost-key.pem
+  reverse_proxy n8n:5678
+}
+
+localhost:5678 {
+  tls /etc/certs/localhost.pem /etc/certs/localhost-key.pem
+  reverse_proxy n8n:5678
+}
+
 
