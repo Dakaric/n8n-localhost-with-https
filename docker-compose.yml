@@ -1,0 +1,65 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    environment:
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_HOST=${N8N_HOST:-n8n.localhost}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://n8n.localhost}
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${N8N_PG_DATABASE:-n8n}
+      - DB_POSTGRESDB_USER=${N8N_PG_USER:-n8n}
+      - DB_POSTGRESDB_PASSWORD=${N8N_PG_PASSWORD:-n8n}
+    volumes:
+      - n8n-data:/home/node/.n8n
+    networks:
+      - internal
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${N8N_PG_USER:-n8n}
+      - POSTGRES_PASSWORD=${N8N_PG_PASSWORD:-n8n}
+      - POSTGRES_DB=${N8N_PG_DATABASE:-n8n}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - internal
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2
+    depends_on:
+      - n8n
+    networks:
+      - internal
+    ports:
+      - "127.0.0.1:443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/etc/certs:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    restart: unless-stopped
+
+networks:
+  internal:
+
+volumes:
+  n8n-data:
+  caddy-data:
+  caddy-config:
+  postgres-data:
+
+

@@ -1,0 +1,6 @@
+n8n.localhost {
+  tls /etc/certs/n8n.localhost.pem /etc/certs/n8n.localhost-key.pem
+  reverse_proxy n8n:5678
+}
+
+

@@ -1,0 +1,21 @@
+# Environment & secrets
+.env
+.env.local
+
+# Local certificates and keys
+certs/
+*.crt
+*.key
+*.pem
+
+# macOS artifacts
+.DS_Store
+
+# IDE/editor
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+
